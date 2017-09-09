@@ -2,8 +2,11 @@ package com.company;
 import com.sun.javafx.image.IntPixelGetter;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Created by ben on 2017-09-08.
@@ -66,6 +69,16 @@ public class read_in_out
 
         buffer_w.close();
 
+        String line4 = Files.readAllLines(Paths.get("temp.txt")).get(3);
+        System.out.println("line 4 ???? " + line4);
+
+/*        String line4_1;
+
+        Stream<String> lines = Files.lines(Paths.get("file.txt"));
+        line4_1= lines.skip(3).findFirst().get();
+        System.out.println("line 4_1 ????  -> " + line4_1);*/
+
+
     }
 
     static String [] splitter(String lis)
@@ -73,4 +86,6 @@ public class read_in_out
         String [] tra = lis.split(" ");
         return tra;
     }
+
+
 }
