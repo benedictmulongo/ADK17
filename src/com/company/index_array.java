@@ -58,12 +58,32 @@ public class index_array
             if(i != null)
                 System.out.println("This indexer -> ? " + i);
         }
-        int [] l = two_index(indexer,"kramar");
+        int [] l = two_index(indexer,"Winor");
         System.out.println("2 indexes " + l[0] + " " + l[1] );
         System.out.println("1 -> " + indexer[l[0]] + " 2 -> " + indexer[l[1]]);
 
+        System.out.println("Now .... it is beginning : >>>>>>>");
+        System.out.println(binary("temp.txt",indexer,"Winor"));
+        System.out.println("Weah ...... or    whoo >>>>>>>>>>>>");
         //read lines
         /*String line32 = Files.readAllLines(Paths.get("temp.txt")).get(4);*/
+        //get the line number
+/*        int ln = binary("temp.txt",indexer,key);
+        String read_ln = Files.readAllLines(Paths.get("temp.txt")).get(ln);
+        String [] random_ac = splitter(read_ln);
+        //get the text file L  read at random from index i = random_ac[1] .... random_ac[random_ac.length - 2]
+        String fl = "File L";
+        RandomAccessFile rd = new RandomAccessFile(fl , "r");
+        count;
+        for i = random_ac[1] .... random_ac[random_ac.length - 2]
+           rd.seek(i);
+          rd.readFully() or rd.readLine()
+            if ( count > 25)
+                "do you want more"
+                        yes -> continue
+                        no -> break*/
+
+
     }
 
     static int computed_function(char tr)
@@ -106,12 +126,6 @@ public class index_array
         return index;
     }
 
-    static String [] splitter(String lis)
-    {
-        String [] tra = lis.split(" ");
-        return tra;
-    }
-
     static String sub_3(String sub)
     {
         return sub.substring(0,3);
@@ -132,29 +146,50 @@ public class index_array
         return ind;
     }
     //should return the line number
- /*   int binary( String text,Index_vector[] indexer,  String key)
- *     {
- *       int [] ind = two_index(indexer, key);
- *       int low, high, mid;
- *       low = ind[0].line_nr;
- *       high = ind[1].line_nr;
- *       return binary(text,low,high,key);
- *       }
- *
- *      int binary(String text, int low, int high, string key)
- *       {
- *       mid = (low + high)/2
- *       String line = Files.readAllLines(Paths.get(text)).get(mid - 1);
- *       String bo = Splitter(line)[0];
- *        int vrai_faux = bo.compareTo(key);
- *         if( vrai_faux == 0)
- *            return mid
- *         else if(vrai_faux < 0)
- *           binary( text, mid, high, key)
- *         else
- *           binary(text, low,high,key)
- *         }
- *
- *
- * */
+    static int binary( String text,Index_vector[] indexer,  String key)  throws IOException
+    {
+
+        int [] ind = two_index(indexer, key);
+        int low, high, mid;
+        low = indexer[ind[0]].line_nr;
+        if(indexer[ind[1]] == null) {
+            return low;
+        }else
+            high = indexer[ind[1]].line_nr;
+
+        int temp;
+
+        if(low > high) {
+            temp = low;
+            low = high;
+            high = temp;
+        }
+
+
+        return recursiveBinarySearch(text,low,high,key);
+    }
+
+    private static int recursiveBinarySearch(String text,int low, int high, String key)  throws IOException {
+            if (low > high)  // The list has been exhausted without a match
+                return -low - 1;
+
+            int mid = (int)Math.ceil((low + high) / 2) + 1;
+            String line = Files.readAllLines(Paths.get(text)).get(mid - 1);
+            String bo = splitter(line)[0];
+            int vrai_faux = bo.compareToIgnoreCase(key);
+
+            if (vrai_faux > 0)
+                return recursiveBinarySearch(text, low, mid - 1, key);
+            else if (vrai_faux == 0)
+                return mid;
+            else
+                return recursiveBinarySearch(text, mid + 1, high, key);
+        }
+
+    static String [] splitter(String lis)
+    {
+        String [] tra = lis.split(" ");
+        return tra;
+    }
+
 }

@@ -72,13 +72,6 @@ public class read_in_out
         String line4 = Files.readAllLines(Paths.get("temp.txt")).get(3);
         System.out.println("line 4 ???? " + line4);
 
-/*        String line4_1;
-
-        Stream<String> lines = Files.lines(Paths.get("file.txt"));
-        line4_1= lines.skip(3).findFirst().get();
-        System.out.println("line 4_1 ????  -> " + line4_1);*/
-
-
     }
 
     static String [] splitter(String lis)
