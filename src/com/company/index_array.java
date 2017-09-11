@@ -65,23 +65,33 @@ public class index_array
         System.out.println("Now .... it is beginning : >>>>>>>");
         System.out.println(binary("temp.txt",indexer,"Winor"));
         System.out.println("Weah ...... or    whoo >>>>>>>>>>>>");
+
+        //Final step !!!!!!!!!!!!!!!!!!!
         //read lines
         /*String line32 = Files.readAllLines(Paths.get("temp.txt")).get(4);*/
         //get the line number
-/*        int ln = binary("temp.txt",indexer,key);
-        String read_ln = Files.readAllLines(Paths.get("temp.txt")).get(ln);
+        int ln = binary("temp.txt",indexer,"key");
+        //get line n with n - 1
+        String read_ln = Files.readAllLines(Paths.get("temp.txt")).get(ln-1);
+        //splitt the line with String key searched and occurences index -> 2 ... random_ac.length-2
         String [] random_ac = splitter(read_ln);
         //get the text file L  read at random from index i = random_ac[1] .... random_ac[random_ac.length - 2]
         String fl = "File L";
         RandomAccessFile rd = new RandomAccessFile(fl , "r");
-        count;
-        for i = random_ac[1] .... random_ac[random_ac.length - 2]
-           rd.seek(i);
-          rd.readFully() or rd.readLine()
-            if ( count > 25)
-                "do you want more"
-                        yes -> continue
-                        no -> break*/
+        int count = 0;
+        //       for( int i = random_ac[1] .... random_ac[random_ac.length - 2])
+
+        for( int j = Integer.parseInt(random_ac[count]); count <= 25 ;  j++)
+        {
+            count++;
+            rd.seek(j);
+            System.out.println(rd.readLine());
+//            if ( count > 25)
+//                "do you want more"
+//            yes -> continue
+//                no -> break
+        }
+
 
 
     }
