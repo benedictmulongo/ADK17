@@ -1,5 +1,3 @@
-package com.company;
-
 /**
  * Created by ben on 2017-09-09.
  */
@@ -8,9 +6,9 @@ public class Index_vector
     String key;           // sorted by key
     int begin;
     int end;
-    int line_nr;
+    long line_nr;
 
-    public Index_vector(String key, int a, int b, int n) {
+    public Index_vector(String key, int a, int b, long n) {
         this.key = key;
         this.begin = a;
         this.end = b;

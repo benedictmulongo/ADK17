@@ -1,6 +1,3 @@
-package com.company;
-import com.sun.javafx.image.IntPixelGetter;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +12,7 @@ public class read_in_out
 {
     public static void main(String [] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new FileReader("lista.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("/var/tmp/templista"));
         ArrayList<Integer> position;
         Map<String,ArrayList<Integer>> mapning = new LinkedHashMap<String, ArrayList<Integer>>();
 
@@ -47,7 +44,6 @@ public class read_in_out
         int size;
         ArrayList<Integer> intro;
 
-        int k = 0;
         for(HashMap.Entry<String, ArrayList<Integer>> enter : mapning.entrySet())
         {
             // write the first string
@@ -62,15 +58,10 @@ public class read_in_out
                 Collections.sort(intro);
                 buffer_w.write(" " + intro.get(i).toString());
             }
-            //System.out.println(enter.getKey() + " -> " + enter.getValue() );
-            buffer_w.write(" " + ++k);
             buffer_w.newLine();
         }
 
         buffer_w.close();
-
-        String line4 = Files.readAllLines(Paths.get("temp.txt")).get(3);
-        System.out.println("line 4 ???? " + line4);
 
     }
 
@@ -79,6 +70,5 @@ public class read_in_out
         String [] tra = lis.split(" ");
         return tra;
     }
-
 
 }
