@@ -17,6 +17,6 @@ public class Index_vector
 
     public String toString()
     {
-        return "[" + key + ", "  + begin + ", " + end + ", " + line_nr +  " ]";
+        return "[" + key + ", "  + begin + ", " + end + ", " + line_nr +  "]";
     }
 }
