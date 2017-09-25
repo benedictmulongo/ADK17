@@ -12,115 +12,36 @@ public class compute_all
             Scanner in = new Scanner(System.in);
             String input = in.next();
 
-            MinPQ<Long> pq = new MinPQ<Long>();
-            Index_vector[] indexer = new Index_vector[250];
-
             RandomAccessFile br = new RandomAccessFile("ordlista.txt", "r");
             BufferedInputStream fromLista1 = new BufferedInputStream(new FileInputStream(new File("ordlista.txt")));
             String thisLine;
-            String [] b;
 
-
-            Index_vector g;
-            long ln_numb;
-            long count = 0;
-            long hold = 0;
-            pq.insert(count);
-
-            int len;
-            while (true) {
-
+            int dist;
+            while (true)
+            {
                 if (Mio.EOF(fromLista1)) {
                     break;
                 } else {
                     thisLine = Mio.GetLine(fromLista1);
                 }
 
-                int dist = edit(input,thisLine);
-                if(dist < 3) {
+                dist = editDistance(input, thisLine);
+                if (dist <= 2) {
                     System.out.println(thisLine + " Dist " + dist);
-                    System.out.println("thisline -> "+ thisLine);
-                }
-
-            }
-
-/*            while (true) {
-
-                if (Mio.EOF(fromLista1)) {
-                    break;
-                } else {
-                    thisLine = Mio.GetLine(fromLista1);
-                }
-
-                b = splitter(thisLine);
-                len = thisLine.length();
-
-                hold = hold + len + 1;
-                pq.insert(hold);
-                ln_numb = pq.delMin();
-
-                if(indexer[hsh(b[0])] == null)
-                {
-                    g = new Index_vector(b[0].charAt(0), ln_numb);
-                    indexer[hsh(b[0])] =  g;
-                    //System.out.println(indexer[hash_str(sub_3(b[0]))]);
-                    System.out.println( "string -> " + b[0] + " char " + b[0].charAt(0) + " hash -> " + hsh(b[0]));
+                    System.out.println(" thisline -> " + thisLine);
                 }
             }
-            for(Index_vector v : indexer) {
-                if(v != null)
-                    System.out.println("this -> " + v);
-            }*/
+            String s = "dabbbhud";
+            String f = "nabbad";
+           System.out.println(" s - f right ? " + editDistance(s,f));
+            System.out.println(" s - f right *** new ***  ? " + edit_dist(f,s));
+/*            System.out.println("list[0] " + lista[3].hold.toString());*/
 
         }
 
-            /*
-            open the file with buffered input stream
-            use queu systeme to find the position av each line
-            creat a array av holder A[]
-            for every read line get the first letter L and hash to a int value
-            set A[hash(letter)].add(position av the first occuren of L and the last occurences of L)
-
-            for every input key compute the first letter then -> find position x1 to x2
-            calculate e = edit_dist(key, every word in [x1,x2])
-            create a array of holder B[]
-            for every e set B[e] = every word with have the edit distance e betwen key and [x1,x2]
-            return B[1,2,3].arraylist
-
-             */
-            static int hsh(String tr) throws IOException
-            {
-                String in = new String(tr.getBytes("ISO-8859-1"), "UTF-8");
-                char a = in.charAt(0);
-                String br = "å ä ö";
-                String [] k = splitter(br);
-                if(String.valueOf(a).equals(k[0]))
-                    return 123;
-                if(String.valueOf(a).equals(k[1]))
-                    return 124;
-                if(String.valueOf(a).equals(k[2]))
-                    return 125;
-
-                int r = (int)a;
-                if(r >= 65 && r <= 90) {
-                    return (r + 32);
-                }
-                else if(r >= 97 && r <= 122) {
-                    return (r);
-                }
-                else
-                    return r;
-            }
-
-    static String [] splitter(String lis)
-    {
-        String [] tra = lis.split(" ");
-        return tra;
-    }
-
     public static int edit(String a, String b)
     {
-        return editDistDP(a, b, a.length(), b.length());
+        return edit(a, b, a.length(), b.length());
     }
 
     public static int edit(String a, String b, int n, int m)
@@ -157,16 +78,6 @@ public class compute_all
         }
         return C[n][m];
     }
-/*    public static int min(int X,int Y,int Z)
-    {
-        int m = X;
-        if(Y < m)
-            m = Y;
-        if(Z < m)
-            m = Z;
-
-        return m;
-    }*/
 
     static int min(int x,int y,int z)
     {
@@ -208,5 +119,189 @@ public class compute_all
         }
 
         return dp[m][n];
+    }
+
+    static int min_edit(String a, String b)
+    {
+        int len1 = a.length();
+        int len2 = b.length();
+
+        int [] col = new int[len2 + 1];
+        int [] prevCol = new int[len2 + 1];
+
+        for(int i = 0; i < prevCol.length;i++)
+            prevCol[i] = i;
+
+        for(int i = 0; i < len1; i++)
+        {
+            col[0] = i + 1;
+            for(int j = 0; j < len2; j++)
+            {
+                col[j+1] = min(1+col[j],1+ prevCol[1+j],prevCol[j] + ((a.charAt(i) == b.charAt(j)) ? 0 : 1 ));
+
+            }
+            //col.swap(prevCol);
+            for(int j = 0; j < len2; j++)
+            {
+                prevCol[j] = col[j];
+                col[j] = 0;
+            }
+        }
+        return prevCol[len2];
+
+    }
+
+    static int min_ed(String a, String b)
+    {
+        int len1 = a.length();
+        int len2 = b.length();
+
+        int [] col = new int[len2 + 1];
+        int [] prevCol = new int[len2 + 1];
+
+        for(int i = 0; i <= prevCol.length;++i)
+            prevCol[i] = i;
+
+        for(int i = 1; i <= len1; ++i)
+        {
+            col[0] = i;
+            for(int j = 0; j <= len2; ++j)
+            {
+                col[j] = min(1+col[j-1],1+ prevCol[j-1],prevCol[j] + ((a.charAt(i) == b.charAt(j)) ? 0 : 1 ));
+
+            }
+            //col.swap(prevCol);
+            for(int j = 0; j < len2; j++)
+            {
+                prevCol[j] = col[j];
+                col[j] = 0;
+            }
+        }
+        return prevCol[len2];
+
+    }
+
+
+    public static int editDistance(String a, String b) {
+        if (a.length() < b.length()) {
+            String temp = a;
+            a = b;
+            b = temp;
+        }
+
+        // b is the shorter string
+        int[] prev = new int[b.length() + 1];
+
+        for (int i = 0; i <= b.length(); ++i) {
+            prev[i] = i;
+        }
+
+        int[] curr = new int[b.length() + 1];
+
+        for (int i = 1; i <= a.length(); ++i) {
+            curr[0] = i;
+
+            for (int j = 1; j <= b.length(); ++j) {
+                if (a.charAt(i - 1) == b.charAt(j - 1)) {
+                    curr[j] = prev[j - 1];
+                } else {
+                    curr[j] = 1 + Math.min(prev[j - 1], Math.min(prev[j], curr[j - 1]));
+                }
+            }
+
+            for (int j = 0; j <= b.length(); ++j) {
+                prev[j] = curr[j];
+                curr[j] = 0;
+            }
+        }
+
+        return prev[b.length()];
+    }
+
+    // Dynamisk beräkning av matrisen
+    public static int dist(String w1, String w2) {
+        int w1len = w1.length();
+        int w2len = w2.length();
+        int c;
+        int r;
+        int lastDiagonal;
+        int oldDialog;
+
+        int[] column = new int[w1len+1];
+
+        for (c = 1; c <= w1len; c++)
+            column[c] = c;
+
+        for (r = 1; r <= w2len; r++){
+            column[0] = r;
+            lastDiagonal = r-1;
+            for (c = 1; c <= w1len; c++) {
+                oldDialog = column[c];
+                column[c] = min(column[c]+1, column[c-1]+1, lastDiagonal + (w1.charAt(c - 1) == w2.charAt(r - 1) ? 0 : 1));
+                lastDiagonal = oldDialog;
+            }
+        }
+        return column[w1len];
+    }
+
+    public static int d(String a, String b)
+    {
+        int m = a.length();
+        int n = b.length();
+        int m1,m2,m3;
+
+        int t;
+
+        int q = m;
+        int [] d = new int [n+1];
+        d[q] = 0;
+        System.out.println("q = " + q + " d[q].lengtht = " + d.length);
+        for(int j = 1; j <= n; j++)
+        {
+            q = q + 1;
+            t = d[q-1] + 1;
+            d[q] = t;
+        }
+
+        int p = m;
+        for(int i = 1; i <= m; i++)
+        {
+            p = p - 1;
+            q = p;
+            d[q] = d[q + 1]+ 1;
+            for(int j = 1; j <= n; j++){
+                q = q + 1;
+//                m1 = d[q] + sub(A[i], B[j]) + (a.charAt(i) == b.charAt(j) ? 0 : 1);
+                m1 = d[q] + (a.charAt(i) == b.charAt(j) ? 0 : 1);
+                m2 = d[q + 1] + 1;
+                m3 = d[q - 1] + 1;
+                d[q] = Math.min(m1, Math.min(m2, m3));
+
+            }
+        }
+
+        return d[n];
+    }
+
+    static int edit_dist(String s1, String s2)
+    {
+        int len1 = s1.length() , len2 = s2.length();
+        int [] col = new int [len2 + 1];
+        int [] prevCol = new int [len2 + 1];
+
+        //std::iota(prevCol.begin(), prevCol.end(), 0)
+        for(int i = 0; i < prevCol.length; i++)
+            prevCol[i] = i;
+        for (int i = 0; i < len1; ++i)
+        {
+            col[0] = i + 1;
+            for (int j = 0; j < len2; ++j)
+                col[j + 1] = Math.min(1 + col[j], Math.min(1 + prevCol[j], prevCol[j] + (s1.charAt(i) == s2.charAt(j) ? 0 : 1)));
+            //col.swap(prevCol);
+            int [] temp = col;
+            col = prevCol;
+            prevCol = temp;
+        }
+        return prevCol[len2];
     }
 }
