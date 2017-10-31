@@ -23,15 +23,19 @@ public class Main
             int start = sc.nextInt();
             int slut = sc.nextInt();
             int kap = sc.nextInt();
-            System.out.println("start -> " + start + " slut -> " + slut +" kap -> " + kap );
+            //System.out.println("start -> " + start + " slut -> " + slut +" kap -> " + kap );
             funka[i] = new EDGES(start,slut,0,kap);
             i++;
         }
         for( EDGES e : funka)
-            System.out.println("edeges -> " + e);
+            System.out.println("Edges -> " + e);
         Network net = new Network(antal_horn + 1,s,t,funka);
-        System.out.println("net max flow -> " + net.maxflow_computation(s,t));
-        System.out.println("neighbours of vertex 0 -> " + net.getNeighbours(s));
+        System.out.println("Net max flow -> " + net.maxflow_computation(s,t));
+        System.out.println("Neighbours of vertex " + s + " -> " + net.getNeighbours(s));
+        //print edges
+        net.print_edges(s,t);
+        //print matchning
+        net.print_match(s,t);
     }
 
 }
