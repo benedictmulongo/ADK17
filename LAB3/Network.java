@@ -31,13 +31,56 @@ public class Network {
         {
 
             EDGES back = e[i];
-            System.out.println("back.begin " + back.begin + "back.end " + back.end);
+           // System.out.println("back.begin " + back.begin + "back.end " + back.end);
             int a = back.begin;
             int b = back.end;
 
             capacity[a][b] = back.capacity;
         }
 
+    }
+    public void print_edges(int s, int t)
+    {
+        System.out.println("******************************* PRINT EDGGES *******************************");
+        ArrayList<Integer>  near = new ArrayList<Integer>();
+        for(int i = 0; i <numVertices; i++)
+        {
+            if((i != s ) && (i != t) )
+            {
+                int el = i;
+                near = getNeighbours(el);
+                for(int j : near)
+                {
+                    if((j != s ) && (j != t) )
+                        System.out.println( i + " -> " +  j + " " + " flow -> " + flow[i][j] + " cap -> " + capacity[i][j]);
+                }
+            }
+
+        }
+        System.out.println("******************************* FINISH *******************************");
+    }
+
+    public void print_match(int s, int t)
+    {
+        System.out.println("******************************* PRINT MATCH *******************************");
+        ArrayList<Integer>  near = new ArrayList<Integer>();
+        for(int i = 0; i <numVertices; i++)
+        {
+            if((i != s ) && (i != t) )
+            {
+                int el = i;
+                near = getNeighbours(el);
+                for(int j : near)
+                {
+                    if((j != s ) && (j != t) ) {
+                        if(flow[i][j] != 0)
+                            System.out.println(i + " -> " + j + " " + " flow -> " + flow[i][j] + " cap -> " + capacity[i][j]);
+                    }
+                }
+            }
+
+        }
+        System.out.println("******************************* FINISH *******************************");
     }
     // Compute the maxflow of the network
     public int maxflow_computation (int source, int sink) {
@@ -114,7 +157,7 @@ public class Network {
             {
                 System.out.print(" ( " + v + " -> " + previous[v] + " )");
             }
-            System.out.println(" ");
+            System.out.println(" * ");
             System.out.println("-----------------********************************------------------");
             return true;
         }
@@ -125,10 +168,10 @@ public class Network {
     public ArrayList<Integer> getNeighbours(int v)
     {
         ArrayList<Integer> neigh = new ArrayList<Integer>();
-        for(int i = 0; i < this.capacity[0].length; i++) {
+        for(int i = 0; i < this.capacity[0].length; i++)
+        {
             if(capacity[v][i] != -2)
                 neigh.add(i);
-
         }
         return neigh;
     }
