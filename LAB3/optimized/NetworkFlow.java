@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.io.*;
 import java.util.*;
@@ -109,8 +107,41 @@ public class NetworkFlow {
         System.out.println(count);
         System.out.println(br.toString());
     }
+    public int[][] print_return(int s, int t, int n)
+    {
+        int count = 0;
+        StringBuilder br = new StringBuilder();
+
+        for(int i = 0; i < this.gph.length; i++)
+        {
+            List<Edge> e = this.gph[i];
+            for(int j = 0; j < e.size(); j++ )
+            {
+                if(e.get(j).f > 0) {
+                    count++;
+                    br.append(e.get(j) + NEW_LINE_SEPARATOR);
+                }
+            }
+
+        }
+        String edgeArray[] = br.toString().split("\n");
+        int[][] tmp = new int[3+edgeArray.length][3];
+        tmp[0][0] = n;
+        tmp[1][0] = s;
+        tmp[1][1] = t;
+        tmp[1][2] = this.flowMax;
+        tmp[2][0] = count;
+        if (edgeArray[0].length() !=0) {
+            for (int k = 0; k < edgeArray.length; k++) {
+                String[] tmp2 = edgeArray[k].split(" ");
+                tmp[k+3][0] = Integer.parseInt(tmp2[0]);
+                tmp[k+3][1] = Integer.parseInt(tmp2[1]);
+                tmp[k+3][2] = Integer.parseInt(tmp2[2]);
+            }
+        }
+        return tmp;
+    }
 
 
 
 }
-
