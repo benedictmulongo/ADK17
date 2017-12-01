@@ -68,7 +68,7 @@ public class Main
                 //use an hash here to speed up
                 for(int k = 2 ; k < values.length; k++ )
                 {
-                    if(!allroles[Integer.valueOf(values[j])].contains(roll[Integer.valueOf(values[k])]))
+                    if((!allroles[Integer.valueOf(values[j])].contains(roll[Integer.valueOf(values[k])]) && (!(values[j]).equals(values[k]))  ))
                     {
                         allroles[Integer.valueOf(values[j])].add(roll[Integer.valueOf(values[k])]);
                         allroles[Integer.valueOf(values[k])].add(roll[Integer.valueOf(values[j])]);
@@ -135,16 +135,21 @@ public class Main
             // check all the neighbours without success
             if(calcul == (10*roll_to_actors[vertex1].size()))
             {
+                System.out.println(" BEGIN OF SUPERACTOR ");
                 System.out.println("New Color please ");
+                System.out.println(" heRE ++++++ HERE ");
                 antal_skodis = antal_skodis + 1;
                 roll[vertex1].putColor("p" + antal_skodis);
                 isColored[vertex1] = true;
                 calcul = 0;
                 count++;
+                System.out.println(" STOP OF SUPERACTOR ");
             }
             // else create a new color
         }
-
+        System.out.println(" *********** FINAL RESULT *********** : ");
+        for(int j = 1; j < allroles.length; j++)
+            System.out.println(" Roll = " + j + " ->  " + allroles[j]);
 
     }
 
