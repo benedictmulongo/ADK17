@@ -63,14 +63,18 @@ public class Main
         {
             String line = sc.nextLine();
             String [] values = splitter(line);
-            for(int j = 1, k = 2; j < values.length -1 ; j = j + 1, k = k +1)
+            for(int j = 1;  j < values.length -1 ; j++)
             {
                 //use an hash here to speed up
-                if(!allroles[Integer.valueOf(values[j])].contains(roll[Integer.valueOf(values[k])]))
+                for(int k = 2 ; k < values.length; k++ )
                 {
-                    allroles[Integer.valueOf(values[j])].add(roll[Integer.valueOf(values[k])]);
-                    allroles[Integer.valueOf(values[k])].add(roll[Integer.valueOf(values[j])]);
+                    if(!allroles[Integer.valueOf(values[j])].contains(roll[Integer.valueOf(values[k])]))
+                    {
+                        allroles[Integer.valueOf(values[j])].add(roll[Integer.valueOf(values[k])]);
+                        allroles[Integer.valueOf(values[k])].add(roll[Integer.valueOf(values[j])]);
+                    }
                 }
+
             }
         }
         // test if the roles could be changed
@@ -138,11 +142,7 @@ public class Main
                 calcul = 0;
                 count++;
             }
-
-
             // else create a new color
-
-
         }
 
 
@@ -153,4 +153,6 @@ public class Main
         String [] tra = lis.split(" ");
         return tra;
     }
+
+
 }
