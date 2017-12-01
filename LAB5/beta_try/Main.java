@@ -90,6 +90,7 @@ public class Main
         int count = 0;
         boolean [] isColored = new boolean[antal_roller +1];
         int calcul = 0;
+        int super_Actors = 0;
         while(count != antal_roller)
         {
             int vertex1 = (int)(1+ Math.random()*(antal_roller-1));
@@ -133,12 +134,13 @@ public class Main
 
             }
             // check all the neighbours without success
-            if(calcul == (10*roll_to_actors[vertex1].size()))
+            if( (calcul == (10*roll_to_actors[vertex1].size())) && (super_Actors <= antal_roller -1))
             {
                 System.out.println(" BEGIN OF SUPERACTOR ");
                 System.out.println("New Color please ");
                 System.out.println(" heRE ++++++ HERE ");
                 antal_skodis = antal_skodis + 1;
+                super_Actors++;
                 roll[vertex1].putColor("p" + antal_skodis);
                 isColored[vertex1] = true;
                 calcul = 0;
@@ -148,6 +150,7 @@ public class Main
             // else create a new color
         }
         System.out.println(" *********** FINAL RESULT *********** : ");
+        System.out.println("Antal superskådisar = " + super_Actors);
         for(int j = 1; j < allroles.length; j++)
             System.out.println(" Roll = " + j + " ->  " + allroles[j]);
 
